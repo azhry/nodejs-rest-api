@@ -1,0 +1,10 @@
+const pg = require('pg');
+const connectionString = process.env.DATABASE_URL || 'postgres://postgres:4kuGanteng@localhost:5432/todo';
+
+const client = new pg.Client(connectionString);
+client.connect();
+
+const query = client.query('CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) NOT NULL, complete BOOLEAN)');
+query.on('end', function() {
+	client.end();
+}); 
